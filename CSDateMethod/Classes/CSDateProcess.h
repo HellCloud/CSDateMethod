@@ -8,7 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CSDateProcess : NSObject
+@interface CSDateProcess : NSObject{
+    NSString *numberOfDaysOfThisMonth;
+    
+    NSString *dayOfWeek;
+    NSString *dayOfMonth;
+    NSString *todayDate;
+    
+    NSArray *dateOfWeekArray;
+    NSArray *dateOfMonthArray;
+}
 
 
 - (NSString *)getLocalTimeZoneCurrentDateOfThisMonth;
