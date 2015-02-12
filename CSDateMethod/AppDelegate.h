@@ -2,7 +2,7 @@
 //  AppDelegate.h
 //  CSDateMethod
 //
-//  Created by SungHsiang Yu on 2015/2/11.
+//  Created by Cloud Sung on 2015/2/11.
 //
 //
 

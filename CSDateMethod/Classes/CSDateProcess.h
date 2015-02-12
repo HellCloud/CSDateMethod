@@ -2,23 +2,20 @@
 //  CSDateProcess.h
 //  CSDateMethod
 //
-//  Created by SungHsiang Yu on 2015/2/11.
+//  Created by Cloud Sung on 2015/2/11.
 //
 //
 
 #import <Foundation/Foundation.h>
 
-@interface CSDateProcess : NSObject{
-    NSString *numberOfDaysOfThisMonth;
-    
-    NSString *dayOfWeek;
-    NSString *dayOfMonth;
-    NSString *todayDate;
-    
-    NSArray *dateOfWeekArray;
-    NSArray *dateOfMonthArray;
-}
+typedef NS_ENUM(NSInteger, CSDateType){
+    CSDateTypeThisWeek,
+    CSDateTypeThisMonth,
+    CSDateTypeLastWeek,
+    CSDateTypeLastMonth
+};
 
+@interface CSDateProcess : NSObject
 
 - (NSString *)getLocalTimeZoneCurrentDateOfThisMonth;
 - (NSString *)getLocalTimeZoneCurrentDateOfThisWeek;
@@ -27,5 +24,12 @@
 - (NSString *)getCurrentDateOfThisWeekWithTimeZone:(NSTimeZone*)timeZone;
 
 - (NSString *)getTotalDaysOfLastMonth;
+
+- (NSArray *)getAllDateInThisMonth;
+- (NSArray *)getAllDateInThisWeek;
+- (NSArray *)getAllDateinLastMonth;
+- (NSArray *)getAllDateinLastWeek;
+
+- (NSString*)dateProcessWithType:(CSDateType)type TimeZone:(NSTimeZone *)timeZone;
 
 @end
