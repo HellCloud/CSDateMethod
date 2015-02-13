@@ -23,11 +23,6 @@
 - (NSString *)getCurrentDateOfThisWeekWithTimeZone:(NSTimeZone*)timeZone{
     return [self dateProcessWithType:CSDateTypeThisWeek TimeZone:timeZone];
 }
-
-- (NSString *)getTotalDaysOfLastMonth{
-    return nil;
-}
-
 - (NSArray *)getAllDateInThisMonth{
     return [self getAllDateInThisMonthWithTimeZone:[NSTimeZone systemTimeZone]];
 }
@@ -40,13 +35,20 @@
 - (NSArray *)getAllDateInThisWeekTimeZone:(NSTimeZone *)timeZone{
     return [self getAllDateThisWeekWithTimeZone:timeZone];
 }
+- (NSArray *)getAllDateInLastMonth{
+    return [self getAllDateLastMonthWithTimeZone:[NSTimeZone systemTimeZone]];
+}
+- (NSString *)getTotalDaysOfLastMonth{
+    return [NSString stringWithFormat:@"%lu", (unsigned long)[[self getAllDateLastMonthWithTimeZone:[NSTimeZone systemTimeZone]] count]];
+}
+- (NSString *)getTotalDaysOfThisMonth{
+    return [NSString stringWithFormat:@"%lu", (unsigned long)[[self getAllDateInThisMonth] count]];
+}
+- (NSArray *)getAllDateInLastWeek{
+    return [self getAllDateLastWeekWithTimeZone:[NSTimeZone systemTimeZone]];
+}
 
-- (NSArray *)getAllDateinLastMonth{
-    return nil;
-}
-- (NSArray *)getAllDateinLastWeek{
-    return nil;
-}
+
 
 #pragma mark - Date Process
 
@@ -81,9 +83,50 @@
         
         [dateArray addObject:[dateEndPrev stringByReplacingOccurrencesOfString:@"-" withString:@""]];
     }
-    NSLog(@"%@", dateArray);
+    //NSLog(@"%@", dateArray);
     return [NSArray arrayWithArray:dateArray];
 }
+
+- (NSArray *)getAllDateLastWeekWithTimeZone:(NSTimeZone*)timezone{
+    
+    NSMutableArray *dateArray = [NSMutableArray new];
+    
+    NSDate *today = [NSDate date];
+    NSDateComponents* dateComponents = [[NSDateComponents alloc]init];
+    [dateComponents setWeekday:-7];
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    today = [calendar dateByAddingComponents:dateComponents toDate:today options:0];
+    
+    
+    for (int i = 1; i <= 7; i ++) {
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"yyyy-MM-dd"];// you can use your format.
+        [dateFormat setTimeZone:timezone];
+        NSCalendar *gregorianEnd = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        
+        NSDateComponents *componentsEnd = [gregorianEnd components:NSCalendarUnitWeekday | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:today];
+        
+        NSInteger Enddayofweek = [[[NSCalendar currentCalendar] components:NSCalendarUnitWeekday fromDate:today] weekday];// this will give you current day of week
+        
+        [componentsEnd setDay:([componentsEnd day]+( i -Enddayofweek)+1)];// for end day of the week
+        
+        NSDate *EndOfWeek = [gregorianEnd dateFromComponents:componentsEnd];
+        NSDateFormatter *dateFormat_End = [[NSDateFormatter alloc] init];
+        [dateFormat_End setDateFormat:@"yyyyMMdd"];
+        [dateFormat_End setTimeZone:[NSTimeZone systemTimeZone]];
+        
+        NSString *dateEndPrev = [dateFormat stringFromDate:EndOfWeek];
+        
+        //NSDate *weekEndPrev = [dateFormat_End dateFromString:dateEndPrev];
+        
+        //NSLog(@"%@",dateEndPrev);
+        
+        [dateArray addObject:[dateEndPrev stringByReplacingOccurrencesOfString:@"-" withString:@""]];
+    }
+    //NSLog(@"%@", dateArray);
+    return [NSArray arrayWithArray:dateArray];
+}
+
 
 - (NSArray *)getAllDateThisMonthWithTimeZone:(NSTimeZone *)timezone{
     
@@ -110,30 +153,44 @@
         [dateArray addObject:[dateFormat stringFromDate:firstDayOfMonthDate]];
     }
     
-    NSLog(@"%@", dateArray);
+    //NSLog(@"%@", dateArray);
     
     return [NSArray arrayWithArray:dateArray];
     
 }
 
-- (NSArray *)getAllDateLastMonth{
-    NSDate *dateToday = [NSDate new];
-    NSCalendar *cal = [NSCalendar currentCalendar];
+- (NSArray *)getAllDateLastMonthWithTimeZone:(NSTimeZone *)timeZone{
+    NSMutableArray *dateArray = [NSMutableArray new];
     
-    [cal setTimeZone:[NSTimeZone systemTimeZone]];//[NSTimeZone timeZoneWithName:@"Asia/Taipei"]];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"yyyyMMdd"];
+    [dateFormat setTimeZone:timeZone];
     
-    NSDateComponents *components = [cal components:NSCalendarUnitWeekday | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:dateToday];
+    NSDate *today = [NSDate date]; //Get a date object for today's date
+    NSDateComponents* dateComponents = [[NSDateComponents alloc]init];
+    [dateComponents setMonth:-1];
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    today = [calendar dateByAddingComponents:dateComponents toDate:today options:0];
     
-    [components setDay:([components day] - ([components day] -1))];
-    NSDate *lastMonth = [cal dateFromComponents:components];
-    
-    NSString *lastMonthDaysString = [NSString stringWithFormat:@"%@", lastMonth];
-    NSString *fixedLastMonthDaysString = [lastMonthDaysString substringWithRange:NSMakeRange(8, 2)];
-    NSInteger fixedLastMonthDays = [fixedLastMonthDaysString integerValue];
+    NSRange days = [calendar rangeOfUnit:NSCalendarUnitDay
+                                  inUnit:NSCalendarUnitMonth
+                                 forDate:today];
     
 
+    for (NSInteger i = 1; i <= days.length; i++) {
+        NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        NSDateComponents *comp = [gregorian components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:today];
+        
+        [comp setDay:i];
+        
+        NSDate *firstDayOfMonthDate = [gregorian dateFromComponents:comp];
+        
+        [dateArray addObject:[dateFormat stringFromDate:firstDayOfMonthDate]];
+    }
     
-    return nil;//history30Days;
+   // NSLog(@"%@", dateArray);
+    
+    return [NSArray arrayWithArray:dateArray];
 }
 
 - (NSString *)dateProcessWithType:(CSDateType)type TimeZone:(NSTimeZone *)timeZone{

@@ -24,11 +24,12 @@ typedef NS_ENUM(NSInteger, CSDateType){
 - (NSString *)getCurrentDateOfThisWeekWithTimeZone:(NSTimeZone*)timeZone;
 
 - (NSString *)getTotalDaysOfLastMonth;
+- (NSString *)getTotalDaysOfThisMonth;
 
 - (NSArray *)getAllDateInThisMonth;
 - (NSArray *)getAllDateInThisWeek;
-- (NSArray *)getAllDateinLastMonth;
-- (NSArray *)getAllDateinLastWeek;
+- (NSArray *)getAllDateInLastMonth;
+- (NSArray *)getAllDateInLastWeek;
 
 - (NSString*)dateProcessWithType:(CSDateType)type TimeZone:(NSTimeZone *)timeZone;
 
