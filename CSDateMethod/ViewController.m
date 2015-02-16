@@ -24,8 +24,8 @@
                   @"查閱上週所有的日期",
                   @"查閱本月的所有日期",
                   @"查閱上月的所有日期",
-                  [NSString stringWithFormat:@"本月的總共天數是 %@", [[CSDateProcess sharedInstance] getTotalDaysOfThisMonth]],
-                  [NSString stringWithFormat:@"上月的總共天數是 %@", [[CSDateProcess sharedInstance] getTotalDaysOfLastMonth]]];
+                  [NSString stringWithFormat:@"本月的總共天數是 %@ 天", [[CSDateProcess sharedInstance] getTotalDaysOfThisMonth]],
+                  [NSString stringWithFormat:@"上月的總共天數是 %@ 天", [[CSDateProcess sharedInstance] getTotalDaysOfLastMonth]]];
     
 }
 
@@ -57,5 +57,9 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+}
 
 @end
