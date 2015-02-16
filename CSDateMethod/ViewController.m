@@ -20,10 +20,10 @@
     [super viewDidLoad];
     menuArray = @[[NSString stringWithFormat:@"今天是週 %@", [[CSDateProcess sharedInstance] getLocalTimeZoneCurrentDateOfThisWeek]],
                   [NSString stringWithFormat:@"今天是 %@ 號", [[CSDateProcess sharedInstance] getLocalTimeZoneCurrentDateOfThisMonth]],
-                  @"本週所有的日期",
-                  @"上週所有的日期",
-                  @"本月的所有日期",
-                  @"上月的所有日期",
+                  @"查閱本週所有的日期",
+                  @"查閱上週所有的日期",
+                  @"查閱本月的所有日期",
+                  @"查閱上月的所有日期",
                   [NSString stringWithFormat:@"本月的總共天數是 %@", [[CSDateProcess sharedInstance] getTotalDaysOfThisMonth]],
                   [NSString stringWithFormat:@"上月的總共天數是 %@", [[CSDateProcess sharedInstance] getTotalDaysOfLastMonth]]];
     
