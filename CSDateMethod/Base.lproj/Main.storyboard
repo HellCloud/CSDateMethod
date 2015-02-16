@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qVs-wv-tnk">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--CSDateProcess-->
@@ -19,18 +20,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="H2o-Wg-p7g">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ofj-nd-hdn">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ofj-nd-hdn" id="wzB-9p-Nhw">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="0.0" width="400" height="800"/>
-                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="vXZ-lx-hvc" id="Ohj-VV-6U7"/>
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="mAa-HH-YT8"/>
@@ -38,14 +27,32 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="H2o-Wg-p7g" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-16" id="Gr5-VO-t5J"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="H2o-Wg-p7g" secondAttribute="trailing" constant="-16" id="NDN-gR-MFJ"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="H2o-Wg-p7g" secondAttribute="bottom" id="SXy-ze-IDL"/>
+                            <constraint firstItem="H2o-Wg-p7g" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="topMargin" id="rlC-ca-IRf"/>
+                        </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="H2o-Wg-p7g"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="Gr5-VO-t5J"/>
+                                <exclude reference="NDN-gR-MFJ"/>
+                                <exclude reference="rlC-ca-IRf"/>
+                                <exclude reference="SXy-ze-IDL"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="H2o-Wg-p7g"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="Gr5-VO-t5J"/>
+                                <include reference="NDN-gR-MFJ"/>
+                                <include reference="rlC-ca-IRf"/>
+                                <include reference="SXy-ze-IDL"/>
                             </mask>
                         </variation>
                     </view>

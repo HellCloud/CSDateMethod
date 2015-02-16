@@ -47,7 +47,7 @@
     static NSString* cellidentifier = @"cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier];
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellidentifier];
-    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
     cell.textLabel.text = @"1111";//[menuArray objectAtIndex:indexPath.row];
 //    if (indexPath.row == 2 || indexPath.row == 3 || indexPath.row == 4 || indexPath.row == 5) {
 //        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
