@@ -13,35 +13,50 @@
 
 
 #pragma mark - Singleton / SharedInstance
-static CSDateProcess *_CSDateProcess = nil;
 
 + (CSDateProcess *)sharedInstance{
-    @synchronized([CSDateProcess class]) {
-        
-        //判斷_singletonObject是否完成記憶體配置
-        if (!_CSDateProcess){
-            [self new];
-        }
-        
-        return _CSDateProcess;
-    }
-    return nil;
+    
+    static CSDateProcess *sharedInstance = nil;
+    static dispatch_once_t onceToken = 0;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[CSDateProcess alloc] init];
+        // Do any other initialisation stuff here
+    });
+    return sharedInstance;
 }
 
-+ (id)alloc {
-    @synchronized([CSDateProcess class]) {
-        
-        //避免 [SingletonObject alloc] 方法被濫用
-        NSAssert(_CSDateProcess == nil, @"_singletonObject 已經做過記憶體配置");
-        _CSDateProcess = [super alloc];
-        
-        return _CSDateProcess;
-    }
-    
-    return nil;
-}
+
+//static CSDateProcess *_CSDateProcess = nil;
+//
+//+ (CSDateProcess *)sharedInstance{
+//    
+//    @synchronized([CSDateProcess class]) {
+//        
+//        //判斷_singletonObject是否完成記憶體配置
+//        if (!_CSDateProcess){
+//            [self new];
+//        }
+//        
+//        return _CSDateProcess;
+//    }
+//    return nil;
+//}
+//
+//+ (id)alloc {
+//    @synchronized([CSDateProcess class]) {
+//        
+//        //避免 [SingletonObject alloc] 方法被濫用
+//        NSAssert(_CSDateProcess == nil, @"_singletonObject 已經做過記憶體配置");
+//        _CSDateProcess = [super alloc];
+//        
+//        return _CSDateProcess;
+//    }
+//    
+//    return nil;
+//}
 
 #pragma mark - Getter/Setter
+#pragma mark Day Today
 - (NSString *)getLocalTimeZoneCurrentDateOfThisMonth{
     return [self getCurrentDateOfThisMonthWithTimeZone:[NSTimeZone systemTimeZone]];
 }
@@ -54,80 +69,59 @@ static CSDateProcess *_CSDateProcess = nil;
 - (NSString *)getCurrentDateOfThisWeekWithTimeZone:(NSTimeZone*)timeZone{
     return [self dateProcessWithType:CSDateTypeThisWeek TimeZone:timeZone];
 }
+
+#pragma mark All MonthDays
 - (NSArray *)getAllDateInThisMonth{
     return [self getAllDateInThisMonthWithTimeZone:[NSTimeZone systemTimeZone]];
 }
+- (NSArray *)getAllDateInLastMonth{
+    return [self getAllDateInLastMonthWithTimeZone:[NSTimeZone systemTimeZone]];
+}
+- (NSArray *)getAllDateInThisMonthWithTimeZone:(NSTimeZone *)timeZone{
+    return [self getMonthDaysByType:CSDateTypeThisMonth WithTimeZone:timeZone];
+}
+- (NSArray *)getAllDateInLastMonthWithTimeZone:(NSTimeZone *)timeZone{
+    return [self getMonthDaysByType:CSDateTypeLastMonth WithTimeZone:timeZone];
+}
+
+#pragma mark All WeekDays
 - (NSArray *)getAllDateInThisWeek{
     return [self getAllDateInThisWeekTimeZone:[NSTimeZone systemTimeZone]];
 }
-- (NSArray *)getAllDateInThisMonthWithTimeZone:(NSTimeZone *)timeZone{
-    return [self getAllDateThisMonthWithTimeZone:timeZone];
+- (NSArray *)getAllDateInLastWeek{
+    return [self getAllDateInLastWeekTimeZone:[NSTimeZone systemTimeZone]];
 }
 - (NSArray *)getAllDateInThisWeekTimeZone:(NSTimeZone *)timeZone{
-    return [self getAllDateThisWeekWithTimeZone:timeZone];
+    return [self getWeekDaysByType:CSDateTypeThisWeek WithTimeZone:timeZone];
 }
-- (NSArray *)getAllDateInLastMonth{
-    return [self getAllDateLastMonthWithTimeZone:[NSTimeZone systemTimeZone]];
+- (NSArray *)getAllDateInLastWeekTimeZone:(NSTimeZone *)timeZone{
+    return [self getWeekDaysByType:CSDateTypeLastWeek WithTimeZone:timeZone];
 }
+
+#pragma mark How many days
 - (NSString *)getTotalDaysOfLastMonth{
-    return [NSString stringWithFormat:@"%lu", (unsigned long)[[self getAllDateLastMonthWithTimeZone:[NSTimeZone systemTimeZone]] count]];
+    return [NSString stringWithFormat:@"%lu", (unsigned long)[[self getAllDateInLastMonth] count]];
 }
 - (NSString *)getTotalDaysOfThisMonth{
     return [NSString stringWithFormat:@"%lu", (unsigned long)[[self getAllDateInThisMonth] count]];
 }
-- (NSArray *)getAllDateInLastWeek{
-    return [self getAllDateLastWeekWithTimeZone:[NSTimeZone systemTimeZone]];
-}
-
-
 
 #pragma mark - Date Process
+#pragma mark Week Process
 
-- (NSArray *)getAllDateThisWeekWithTimeZone:(NSTimeZone*)timezone{
-    
+- (NSArray *)getWeekDaysByType:(CSDateType)type WithTimeZone:(NSTimeZone*)timezone{
     NSMutableArray *dateArray = [NSMutableArray new];
     
     NSDate *today = [NSDate date];
     
-    for (int i = 1; i <= 7; i ++) {
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"yyyy-MM-dd"];// you can use your format.
-        [dateFormat setTimeZone:timezone];
-        NSCalendar *gregorianEnd = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-        
-        NSDateComponents *componentsEnd = [gregorianEnd components:NSCalendarUnitWeekday | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:today];
-        
-        NSInteger Enddayofweek = [[[NSCalendar currentCalendar] components:NSCalendarUnitWeekday fromDate:today] weekday];// this will give you current day of week
-        
-        [componentsEnd setDay:([componentsEnd day]+( i -Enddayofweek)+1)];// for end day of the week
-        
-        NSDate *EndOfWeek = [gregorianEnd dateFromComponents:componentsEnd];
-        NSDateFormatter *dateFormat_End = [[NSDateFormatter alloc] init];
-        [dateFormat_End setDateFormat:@"yyyyMMdd"];
-        [dateFormat_End setTimeZone:[NSTimeZone systemTimeZone]];
-        
-        NSString *dateEndPrev = [dateFormat stringFromDate:EndOfWeek];
-        
-        //NSDate *weekEndPrev = [dateFormat_End dateFromString:dateEndPrev];
-        
-        //NSLog(@"%@",dateEndPrev);
-        
-        [dateArray addObject:[dateEndPrev stringByReplacingOccurrencesOfString:@"-" withString:@""]];
+    if (type == CSDateTypeLastWeek) {
+        NSDateComponents* dateComponents = [[NSDateComponents alloc]init];
+        [dateComponents setWeekday:-7];
+        NSCalendar* calendar = [NSCalendar currentCalendar];
+        today = [calendar dateByAddingComponents:dateComponents toDate:today options:0];
+    }else if (type == CSDateTypeThisMonth || type == CSDateTypeLastMonth){
+        return @[@"Input Error"];
     }
-    //NSLog(@"%@", dateArray);
-    return [NSArray arrayWithArray:dateArray];
-}
-
-- (NSArray *)getAllDateLastWeekWithTimeZone:(NSTimeZone*)timezone{
-    
-    NSMutableArray *dateArray = [NSMutableArray new];
-    
-    NSDate *today = [NSDate date];
-    NSDateComponents* dateComponents = [[NSDateComponents alloc]init];
-    [dateComponents setWeekday:-7];
-    NSCalendar* calendar = [NSCalendar currentCalendar];
-    today = [calendar dateByAddingComponents:dateComponents toDate:today options:0];
-    
     
     for (int i = 1; i <= 7; i ++) {
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
@@ -146,65 +140,45 @@ static CSDateProcess *_CSDateProcess = nil;
         [dateArray addObject:[dateEndPrev stringByReplacingOccurrencesOfString:@"-" withString:@""]];
     }
     return [NSArray arrayWithArray:dateArray];
+
 }
 
-
-- (NSArray *)getAllDateThisMonthWithTimeZone:(NSTimeZone *)timezone{
-    
+#pragma mark Month Process
+- (NSArray *)getMonthDaysByType:(CSDateType)type WithTimeZone:(NSTimeZone*)timeZone{
     NSMutableArray *dateArray = [NSMutableArray new];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"yyyyMMdd"];
-    [dateFormat setTimeZone:timezone];
+    
     NSDate *today = [NSDate date];
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSRange days = [calendar rangeOfUnit:NSCalendarUnitDay
-                                  inUnit:NSCalendarUnitMonth
-                                 forDate:today];
-    
-    for (NSInteger i = 1; i <= days.length; i++) {
-        NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-        NSDateComponents *comp = [gregorian components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:today];
-        [comp setDay:i];
-        NSDate *firstDayOfMonthDate = [gregorian dateFromComponents:comp];
-        [dateArray addObject:[dateFormat stringFromDate:firstDayOfMonthDate]];
-    }
-    
-    return [NSArray arrayWithArray:dateArray];
-    
-}
-
-- (NSArray *)getAllDateLastMonthWithTimeZone:(NSTimeZone *)timeZone{
-    NSMutableArray *dateArray = [NSMutableArray new];
-    
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"yyyyMMdd"];
     [dateFormat setTimeZone:timeZone];
     
-    NSDate *today = [NSDate date];
-    NSDateComponents* dateComponents = [[NSDateComponents alloc]init];
-    [dateComponents setMonth:-1];
     NSCalendar* calendar = [NSCalendar currentCalendar];
-    today = [calendar dateByAddingComponents:dateComponents toDate:today options:0];
     
+    if (type == CSDateTypeLastMonth) {
+        //Month -1
+        NSDateComponents* dateComponents = [[NSDateComponents alloc]init];
+        [dateComponents setMonth:-1];
+        today = [calendar dateByAddingComponents:dateComponents toDate:today options:0];
+    
+    }else if (type == CSDateTypeThisWeek || type == CSDateTypeLastWeek){
+        return @[@"Input Error"];
+    }
+
     NSRange days = [calendar rangeOfUnit:NSCalendarUnitDay
                                   inUnit:NSCalendarUnitMonth
                                  forDate:today];
     
-
     for (NSInteger i = 1; i <= days.length; i++) {
         NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
         NSDateComponents *comp = [gregorian components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:today];
-        
         [comp setDay:i];
-        
         NSDate *firstDayOfMonthDate = [gregorian dateFromComponents:comp];
-        
         [dateArray addObject:[dateFormat stringFromDate:firstDayOfMonthDate]];
     }
-
     return [NSArray arrayWithArray:dateArray];
 }
 
+#pragma mark Other Process
 - (NSString *)dateProcessWithType:(CSDateType)type TimeZone:(NSTimeZone *)timeZone{
     NSDate *dateToday = [NSDate date];
     NSString *returnString;
