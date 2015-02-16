@@ -8,7 +8,9 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
+@interface ViewController (){
+    NSArray *menuArray;
+}
 
 @end
 
@@ -16,15 +18,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    menuArray = @[[NSString stringWithFormat:@"今天是週 %@", [[CSDateProcess sharedInstance] getLocalTimeZoneCurrentDateOfThisWeek]],
+                  [NSString stringWithFormat:@"今天是 %@ 號", [[CSDateProcess sharedInstance] getLocalTimeZoneCurrentDateOfThisMonth]],
+                  @"本週所有的日期",
+                  @"上週所有的日期",
+                  @"本月的所有日期",
+                  @"上月的所有日期",
+                  [NSString stringWithFormat:@"本月的總共天數是 %@", [[CSDateProcess sharedInstance] getTotalDaysOfThisMonth]],
+                  [NSString stringWithFormat:@"上月的總共天數是 %@", [[CSDateProcess sharedInstance] getTotalDaysOfLastMonth]]];
     
-    NSLog(@"今天是週 %@", [[CSDateProcess sharedInstance] getLocalTimeZoneCurrentDateOfThisWeek]);
-    NSLog(@"今天是 %@ 號", [[CSDateProcess sharedInstance] getLocalTimeZoneCurrentDateOfThisMonth]);
-    NSLog(@"本週所有的日期是 %@", [[CSDateProcess sharedInstance] getAllDateInThisWeek]);
-    NSLog(@"這個月的所有日期是 %@", [[CSDateProcess sharedInstance] getAllDateInThisMonth]);
-    NSLog(@"上個月的所有日期是 %@", [[CSDateProcess sharedInstance] getAllDateInLastMonth]);
-    NSLog(@"上個月的總共天數是 %@", [[CSDateProcess sharedInstance] getTotalDaysOfLastMonth]);
-    NSLog(@"這個月的總共天數是 %@", [[CSDateProcess sharedInstance] getTotalDaysOfThisMonth]);
-    NSLog(@"上週的所有日期是 %@", [[CSDateProcess sharedInstance] getAllDateInLastWeek]);
 }
 
 
@@ -38,16 +40,21 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return menuArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString* cellidentifier = @"cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier];
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellidentifier];
-    
-    cell.textLabel.text = @"123";
-    
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellidentifier];
+    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    cell.textLabel.text = @"1111";//[menuArray objectAtIndex:indexPath.row];
+//    if (indexPath.row == 2 || indexPath.row == 3 || indexPath.row == 4 || indexPath.row == 5) {
+//        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+//    }
+    //[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     return cell;
 }
+
+
 @end
