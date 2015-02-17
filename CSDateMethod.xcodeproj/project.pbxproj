@@ -137,11 +137,11 @@
 				615401FD1A8AFB9B0090B609 /* AppDelegate.m */,
 				615401FF1A8AFB9B0090B609 /* ViewController.h */,
 				615402001A8AFB9B0090B609 /* ViewController.m */,
+				615402231A92DC050090B609 /* DetailViewController.h */,
+				615402241A92DC050090B609 /* DetailViewController.m */,
 				615402021A8AFB9B0090B609 /* Main.storyboard */,
 				615402051A8AFB9B0090B609 /* Images.xcassets */,
 				615402071A8AFB9B0090B609 /* LaunchScreen.xib */,
-				615402231A92DC050090B609 /* DetailViewController.h */,
-				615402241A92DC050090B609 /* DetailViewController.m */,
 			);
 			name = Sample;
 			sourceTree = "<group>";

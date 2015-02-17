@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qVs-wv-tnk">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -38,10 +39,10 @@
                                 <exclude reference="H2o-Wg-p7g"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="SXy-ze-IDL"/>
                                 <exclude reference="Gr5-VO-t5J"/>
                                 <exclude reference="NDN-gR-MFJ"/>
                                 <exclude reference="rlC-ca-IRf"/>
-                                <exclude reference="SXy-ze-IDL"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -49,10 +50,10 @@
                                 <include reference="H2o-Wg-p7g"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="SXy-ze-IDL"/>
                                 <include reference="Gr5-VO-t5J"/>
                                 <include reference="NDN-gR-MFJ"/>
                                 <include reference="rlC-ca-IRf"/>
-                                <include reference="SXy-ze-IDL"/>
                             </mask>
                         </variation>
                     </view>
@@ -67,6 +68,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="detailViewController" id="AXW-0g-QUx" customClass="DetailViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Th5-3x-xT7">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
