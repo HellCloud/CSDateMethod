@@ -15,6 +15,7 @@
 		615402091A8AFB9B0090B609 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 615402071A8AFB9B0090B609 /* LaunchScreen.xib */; };
 		615402151A8AFB9B0090B609 /* CSDateMethodTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 615402141A8AFB9B0090B609 /* CSDateMethodTests.m */; };
 		615402221A8AFD570090B609 /* CSDateProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 615402211A8AFD570090B609 /* CSDateProcess.m */; };
+		615402251A92DC050090B609 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 615402241A92DC050090B609 /* DetailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,8 @@
 		615402141A8AFB9B0090B609 /* CSDateMethodTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSDateMethodTests.m; sourceTree = "<group>"; };
 		615402201A8AFD570090B609 /* CSDateProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CSDateProcess.h; path = CSDateMethod/Classes/CSDateProcess.h; sourceTree = "<group>"; };
 		615402211A8AFD570090B609 /* CSDateProcess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CSDateProcess.m; path = CSDateMethod/Classes/CSDateProcess.m; sourceTree = "<group>"; };
+		615402231A92DC050090B609 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		615402241A92DC050090B609 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +140,8 @@
 				615402021A8AFB9B0090B609 /* Main.storyboard */,
 				615402051A8AFB9B0090B609 /* Images.xcassets */,
 				615402071A8AFB9B0090B609 /* LaunchScreen.xib */,
+				615402231A92DC050090B609 /* DetailViewController.h */,
+				615402241A92DC050090B609 /* DetailViewController.m */,
 			);
 			name = Sample;
 			sourceTree = "<group>";
@@ -240,6 +245,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				615402251A92DC050090B609 /* DetailViewController.m in Sources */,
 				615402011A8AFB9B0090B609 /* ViewController.m in Sources */,
 				615402221A8AFD570090B609 /* CSDateProcess.m in Sources */,
 				615401FE1A8AFB9B0090B609 /* AppDelegate.m in Sources */,

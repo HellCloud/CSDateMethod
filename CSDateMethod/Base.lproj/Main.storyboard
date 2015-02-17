@@ -62,6 +62,31 @@
             </objects>
             <point key="canvasLocation" x="1690.5" y="344.25"/>
         </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="l1D-86-4Q3">
+            <objects>
+                <tableViewController storyboardIdentifier="detailViewController" id="AXW-0g-QUx" customClass="DetailViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Th5-3x-xT7">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="oD9-VK-1ho">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oD9-VK-1ho" id="CKK-ph-ViF">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="AXW-0g-QUx" id="ivu-6o-TQ2"/>
+                            <outlet property="delegate" destination="AXW-0g-QUx" id="i8A-Aj-T3m"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Lv-de-o1Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2376" y="344.25"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="7dJ-wG-zgW">
             <objects>
