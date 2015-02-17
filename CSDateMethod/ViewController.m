@@ -7,9 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "DetailViewController.h"
 
 @interface ViewController (){
     NSArray *menuArray;
+    NSArray *dataArray;
 }
 
 @end
@@ -59,7 +61,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    DetailViewController *dvc = [self.storyboard instantiateViewControllerWithIdentifier:@"detailViewController"];
+    if (indexPath.row == 2) {
+        dataArray = [[CSDateProcess sharedInstance] getAllDateInThisWeek];
+    }else if (indexPath.row == 3){
+        dataArray = [[CSDateProcess sharedInstance] getAllDateInLastWeek];
+    }else if (indexPath.row == 4){
+        dataArray = [[CSDateProcess sharedInstance] getAllDateInThisMonth];
+    }else if (indexPath.row == 5){
+        dataArray = [[CSDateProcess sharedInstance] getAllDateInLastMonth];
+    }
+    dvc.dataArray = dataArray;
+    [self.navigationController pushViewController:dvc animated:YES];
 }
 
 @end

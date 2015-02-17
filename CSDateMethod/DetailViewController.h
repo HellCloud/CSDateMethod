@@ -10,4 +10,6 @@
 
 @interface DetailViewController : UITableViewController
 
+@property (nonatomic, strong) NSArray *dataArray;
+
 @end

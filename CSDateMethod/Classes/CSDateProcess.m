@@ -20,40 +20,9 @@
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
         sharedInstance = [[CSDateProcess alloc] init];
-        // Do any other initialisation stuff here
     });
     return sharedInstance;
 }
-
-
-//static CSDateProcess *_CSDateProcess = nil;
-//
-//+ (CSDateProcess *)sharedInstance{
-//    
-//    @synchronized([CSDateProcess class]) {
-//        
-//        //判斷_singletonObject是否完成記憶體配置
-//        if (!_CSDateProcess){
-//            [self new];
-//        }
-//        
-//        return _CSDateProcess;
-//    }
-//    return nil;
-//}
-//
-//+ (id)alloc {
-//    @synchronized([CSDateProcess class]) {
-//        
-//        //避免 [SingletonObject alloc] 方法被濫用
-//        NSAssert(_CSDateProcess == nil, @"_singletonObject 已經做過記憶體配置");
-//        _CSDateProcess = [super alloc];
-//        
-//        return _CSDateProcess;
-//    }
-//    
-//    return nil;
-//}
 
 #pragma mark - Getter/Setter
 #pragma mark Day Today
